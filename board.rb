@@ -25,7 +25,7 @@ class Board
   end
 
   def [](pos)
-    pos = x,y
+    x,y = pos
     grid[x][y]
   end
 
@@ -36,7 +36,7 @@ class Board
   end
 
   def columns
-    rows.transpose!
+    rows.transpose
   end
 
   def render
@@ -62,7 +62,7 @@ class Board
 
   def solved_set?(tiles)
     nums = tiles.map(&:value)
-    nums.sort == (1..9)
+    nums.sort == (1..9).to_a
   end
 
   def square(idx)
@@ -70,9 +70,9 @@ class Board
     x = (idx / 3) * 3
     y = (idx % 3) * 3
 
-    (x..x + 3).each do |j|
-      (y..y + 3).each do |i|
-        tiles << self[i, j]
+    (x...x + 3).each do |j|
+      (y...y + 3).each do |i|
+        tiles << self[[i, j]]
       end
     end
 
@@ -80,7 +80,7 @@ class Board
   end
 
   def squares
-    (0..8).to_a.each { |i| square(i) }
+    (0..8).to_a.map{ |i| square(i) }
   end
 
 end
