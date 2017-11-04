@@ -1,5 +1,6 @@
 require_relative "board"
 require 'colorize'
+require "byebug"
 
 puts "Only contractors write code this bad.".yellow
 
