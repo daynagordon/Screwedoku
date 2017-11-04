@@ -1,6 +1,5 @@
 require_relative "board"
 require 'colorize'
-require "byebug"
 
 puts "Only contractors write code this bad.".yellow
 
@@ -14,14 +13,12 @@ class SudokuGame
     @board = board
   end
 
-  def method_missing(method_name, *args)
-    if method_name =~ /val/
-      Integer(1)
-    end
-  end
-  
   def parse_pos pos
     pos.split(",").map{ |char| Integer(char) }
+  end
+  
+  def parse_val val
+    Integer(val)
   end
 
   def get_pos
