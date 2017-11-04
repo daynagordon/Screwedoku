@@ -13,10 +13,8 @@ class SudokuGame
     @board = board
   end
 
-  def method_missing(method_name, *args)
-    if method_name =~ /val/
-      Integer(1)
-    end
+  def parse_val(val)
+    Integer(val)
   end
   
   def parse_pos(pos)
