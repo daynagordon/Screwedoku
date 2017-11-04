@@ -28,7 +28,7 @@ class SudokuGame
       print "> "
 
       begin
-        pos = parse_pos(gets)
+        pos = parse_pos(gets.chomp)
       rescue => error
         puts "Invalid position entered (did you use a comma?)"
         puts "#{error}"
@@ -44,7 +44,15 @@ class SudokuGame
     until val && valid_val?(val)
       puts "Please enter a value between 1 and 9 (0 to clear the tile)"
       print "> "
-      val = parse_val(gets)
+      
+      begin
+      val = parse_val(gets.chomp)
+      rescue => error
+        puts "Invalid value entered (single digit only)"
+        puts "#{error}"
+
+        val = nil
+      end
     end
     val
   end
@@ -67,18 +75,12 @@ class SudokuGame
   end
 
   def valid_pos?(pos)
-    if pos.is_a?(Array) &&
-      pos.length == 2 &&
-      pos.all? { |x| x.between?(0, board.size - 1) }
-      return true
-    else
-      get_pos
-    end
+    pos.is_a?(Array) && pos.length == 2 &&
+      pos.all?{ |x| x.between?(0, 9) }
   end
 
   def valid_val?(val)
-    val.is_a?(Integer) ||
-      val.between?(0, 9)
+    val.is_a?(Integer) && val.between?(0, 9)
   end
 
   private
@@ -86,5 +88,5 @@ class SudokuGame
 end
 
 
-game = SudokuGame.from_file("puzzles/sudoku1.txt")
+game = SudokuGame.from_file("puzzles/sudoku1-solved.txt")
 game.run
